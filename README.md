@@ -1,23 +1,10 @@
-## Create-React-App-Lambda
+## React-Netlify-Lambda-KIRBYASDF-EDITION
 
-This project is a reference demo showing you how to use [Create React App v3](https://github.com/facebookincubator/create-react-app) and [netlify-lambda v1](https://github.com/netlify/netlify-lambda) together in a [Netlify Dev](https://www.netlify.com/docs/cli/?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex#netlify-dev-beta) workflow. You can clone this and immediately be productive with a React app with serverless Netlify Functions in the same repo. Alternatively you can deploy straight to Netlify with this one-click Deploy:
+Deploy to netlify or run locally.... simply change any notice of yarn to npm during netlify deployment set up. 
+
 
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify/create-react-app-lambda&utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex)
-
-> ⚠️NOTE: You may not need this project at all. [Netlify Dev](https://github.com/netlify/netlify-dev-plugin) works with `create-react-app` out of the box! Only use `netlify-lambda` if you need a build step for your functions, eg if you want to use Babel or TypeScript ([see its README for details](https://github.com/netlify/netlify-lambda/blob/master/README.md#netlify-lambda)).
-
-## Project Setup
-
-**Source**: The main addition to base Create-React-App is a new folder: `src/lambda`. This folder is specified and can be changed in the `package.json` script: `"build:lambda": "netlify-lambda build src/lambda"`.
-
-**Dist**: Each JavaScript file in there will be built for Netlify Function deployment in `/built-lambda`, specified in [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/?utm_source=github&utm_medium=swyx-CRAL&utm_campaign=devex).
-
-As an example, we've included a small `src/lambda/hello.js` function, which will be deployed to `/.netlify/functions/hello`. We've also included an async lambda example using async/await syntax in `async-dadjoke.js`.
-
-## Video
-
-Learn how to set this up yourself (and why everything is the way it is) from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
 
 ## Babel/webpack compilation
 
@@ -28,9 +15,9 @@ All functions (inside `src/lambda`) are compiled with webpack using Babel, so yo
 ```bash
 ## prep steps for first time users
 npm i -g netlify-cli # Make sure you have the [Netlify CLI](https://github.com/netlify/cli) installed
-git clone https://github.com/netlify/create-react-app-lambda ## clone this repo
+git clone https://github.com/Kirbyasdf/netlfiy-lambda-boilerplate.git ## clone this repo
 cd create-react-app-lambda ## change into this repo
-yarn # install all dependencies
+npm i # install all dependencies
 
 ## done every time you start up this project
 ntl dev ## nice shortcut for `netlify dev`, starts up create-react-app AND a local Node.js server for your Netlify functions
@@ -50,54 +37,10 @@ Each function will be available at the same port as well:
 
 ## Deployment
 
-During deployment, this project is configured, inside `netlify.toml` to run the build `command`: `yarn build`.
+During deployment, this project is configured, inside `netlify.toml` to run the build `command`: `npm build`.
 
-`yarn build` corresponds to the npm script `build`, which uses `npm-run-all` (aka `run-p`) to concurrently run `"build:app"` (aka `react-scripts build`) and `build:lambda` (aka `netlify-lambda build src/lambda`).
+`npm build` corresponds to the npm script `build`, which uses `npm-run-all` (aka `run-p`) to concurrently run `"build:app"` (aka `react-scripts build`) and `build:lambda` (aka `netlify-lambda build src/lambda`).
 
-## Typescript
-
-<details>
-  <summary>
-    <b id="typescript">Click for instructions</b>
-  </summary>
-
-You can use Typescript in both your frontend React code (with `react-scripts` v2.1+) and your serverless functions (with `netlify-lambda` v1.1+). Follow these instructions:
-
-1. `yarn add -D typescript @types/node @types/react @types/react-dom @babel/preset-typescript @types/aws-lambda`
-2. convert `src/lambda/hello.js` to `src/lambda/hello.ts`
-3. use types in your event handler:
-
-```ts
-import { Handler, Context, Callback, APIGatewayEvent } from 'aws-lambda'
-
-interface HelloResponse {
-  statusCode: number
-  body: string
-}
-
-const handler: Handler = (event: APIGatewayEvent, context: Context, callback: Callback) => {
-  const params = event.queryStringParameters
-  const response: HelloResponse = {
-    statusCode: 200,
-    body: JSON.stringify({
-      msg: `Hello world ${Math.floor(Math.random() * 10)}`,
-      params,
-    }),
-  }
-
-  callback(undefined, response)
-}
-
-export { handler }
-```
-
-rerun and see it work!
-
-You are free to set up your `tsconfig.json` and `tslint` as you see fit.
-
-</details>
-
-**If you want to try working in Typescript on the client and lambda side**: There are a bunch of small setup details to get right. Check https://github.com/sw-yx/create-react-app-lambda-typescript for a working starter.
 
 ## Routing and authentication with Netlify Identity
 
