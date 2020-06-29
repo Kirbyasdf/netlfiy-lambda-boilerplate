@@ -1,4 +1,4 @@
-## Create-React-App-Lambd-KIRBYASDF-EDITION
+## React-Netlify-Lambda-KIRBYASDF-EDITION
 
 Deploy to netlify or run locally.... simply change any notice of yarn to npm during netlify deployment set up. 
 
