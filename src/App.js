@@ -1,45 +1,81 @@
-import React, { Component } from "react"
+import React, { useState, Fragment } from "react";
 
-import "tachyons"
+import "tachyons";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+const LambdaDemo = () => {
+  const [loading, setLoading] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [user, setUser] = useState({ name: null, salary: null, age: null });
 
-  handleClick = api => e => {
-    e.preventDefault()
+  console.log(user);
 
-    this.setState({ loading: true })
+  const handleClick = (api) => (e) => {
+    e.preventDefault();
+
+    setLoading(true);
     fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
+      .then((response) => response.json())
+      .then((json) => {
+        setLoading(false);
+        setMessage(json.msg);
+      });
+  };
 
-  render() {
-    const { loading, msg } = this.state
+  const handlePost = (e) => {
+    e.preventDefault();
+    const data = {
+      name: "tester",
+      salary: "three fifty",
+      age: 42,
+    };
+    fetch("/.netlify/functions/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        data,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        setLoading(false);
+        setUser(json.data);
+      });
+  };
 
+  const userCard = () => {
+    console.log(user.age);
     return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
-}
+      <Fragment>
+        {" "}
+        <h1>name {user.name}</h1>
+        <h1>salary {user.salary}</h1>
+        <h1>age {user.age}</h1>
+      </Fragment>
+    );
+  };
 
-class App extends Component {
-  render() {
-    return (
-      <div className="bg-pink pv7  tc ">
-       
-          <LambdaDemo />
-       </div>
-    )
-  }
-}
+  return (
+    <p className="tc   ">
+      <button onClick={handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
+      <button onClick={handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
+      <button onClick={(e) => handlePost(e)}>{loading ? "Loading..." : "Call Post Lambda"}</button>
+      <br />
+      <span>{message}</span>
+      <Fragment>{userCard()}</Fragment>
+    </p>
+  );
+};
 
-export default App
+const App = () => {
+  return (
+    <div className="bg-pink vh-100 pa1">
+      <LambdaDemo />
+    </div>
+  );
+};
+
+export default App;
