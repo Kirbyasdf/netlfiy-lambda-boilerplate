@@ -40,7 +40,6 @@ const LambdaDemo = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
         setLoading(false);
         setUser(json.data);
       });
@@ -50,7 +49,6 @@ const LambdaDemo = () => {
     console.log(user.age);
     return (
       <Fragment>
-        {" "}
         <h1>name {user.name}</h1>
         <h1>salary {user.salary}</h1>
         <h1>age {user.age}</h1>
