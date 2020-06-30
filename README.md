@@ -2,7 +2,7 @@
 
 Deploy to netlify or run locally.... simply change any notice of yarn to npm during netlify deployment set up. 
 
-Added Post demo
+Added POST demo
 
 
 
