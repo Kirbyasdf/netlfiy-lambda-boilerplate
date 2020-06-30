@@ -46,7 +46,6 @@ const LambdaDemo = () => {
   };
 
   const userCard = () => {
-    console.log(user.age);
     return (
       <Fragment>
         <h1>name {user.name}</h1>
