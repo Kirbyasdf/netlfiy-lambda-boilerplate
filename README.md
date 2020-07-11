@@ -7,8 +7,11 @@ Added POST demo
 ## to start
 
 npm i -g netlify-cli
+
 clone repo
+
 npm i 
+
 ntl dev
 
 
