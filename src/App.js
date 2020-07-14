@@ -7,7 +7,6 @@ const LambdaDemo = () => {
   const [message, setMessage] = useState(null);
   const [user, setUser] = useState({ name: null, salary: null, age: null });
 
-  console.log(user);
 
   const handleClick = (api) => (e) => {
     e.preventDefault();
